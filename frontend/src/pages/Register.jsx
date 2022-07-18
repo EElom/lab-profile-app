@@ -1,13 +1,18 @@
 import {useState} from 'react'
+import axios from "axios"
 import { FaUser } from 'react-icons/fa'
+import { API_URL } from "../constants"
 
 const Register = () =>  {
+
     const [image,setImage] = useState ("")
     const [name, setName] = useState ("")
     const [email, setEmail] = useState ("")
     const [password, setPassword] = useState ("")
     const [campus, setCampus] = useState ("")
     const [course, setCourse] = useState ("")
+    
+    
     const handleImage = (e) => setImage(e.target.value)
     const handleName =  (e) => setName(e.target.value)
     const handleEmail =  (e) => setEmail(e.target.value)
@@ -18,6 +23,16 @@ const Register = () =>  {
     
     const handleSubmit = async (e) => {
       e.preventDefault()
+      try {
+        const {data} = await axios.post(`${API_URL}/auth/register`, {
+          name,
+          email,
+          password,
+          campus,
+          course
+          })
+          console.log(data)
+      } catch (error) {}
     }
     
 
@@ -56,6 +71,7 @@ const Register = () =>  {
             <input
               type='text'
               className='form-control'
+              autoComplete="off"
               id='name'
               name='name'
               value={name}
@@ -68,6 +84,7 @@ const Register = () =>  {
             <input
               type='email'
               className='form-control'
+              autoComplete="off"
               id='email'
               name='email'
               value={email}
@@ -89,28 +106,37 @@ const Register = () =>  {
             </div>
 
             <div className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              id='course'
-              name='course'
-              value={course}
-              placeholder='Enter your course'
-              onChange={handleCourse}
-              />
+              <select id="course" name="course" onChange={handleCourse}>
+                <option value=""> Select your course </option>
+                <option value="webdev">Web Dev</option>
+                <option value="UxUi"> UX/UI</option>
+                <option value="dataAnalytics">Data Analytics</option>
+                <option value="paris">Paris</option>
+                <option value="berlin">Berlin</option>
+                <option value="amsterdam">Amsterdam</option>
+                <option value="mexico">Mexico</option>
+                <option value="saoPaulo">Sao Paulo</option>
+                <option value="lisbon">Lisbon</option>
+                <option value="remote">Remote</option>
+              </select> 
             </div>
 
             <div className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              id='campus'
-              name='campus'
-              value={campus}
-              placeholder='Enter your campus'
-              onChange={handleCampus}
-              />
+              <select id="campus" name="campus" onChange={handleCampus}>
+                <option value=""> Select your campus </option>
+                <option value="madrid">Madrid</option>
+                <option value="barcelona">Barcelona</option>
+                <option value="miami">Miami</option>
+                <option value="paris">Paris</option>
+                <option value="berlin">Berlin</option>
+                <option value="amsterdam">Amsterdam</option>
+                <option value="mexico">Mexico</option>
+                <option value="saoPaulo">Sao Paulo</option>
+                <option value="lisbon">Lisbon</option>
+                <option value="remote">Remote</option>
+              </select> 
             </div>
+            
             <div className='form-group'>
               <button type='submit' className='btn btn-block'>
                 Submit
